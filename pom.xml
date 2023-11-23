@@ -16,7 +16,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<snakeyaml.version>2.0</snakeyaml.version>
-		<opencsv.version>5.7.1</opencsv.version>
+		<opencsv.version>5.8</opencsv.version>
 	</properties>
 	<dependencies>
 		<dependency>
