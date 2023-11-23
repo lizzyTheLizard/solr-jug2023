@@ -31,7 +31,11 @@ public class InitializerController {
     }
 
     private void initDB(Collection<Game> games){
-        gameRepository.truncate();
+        try {
+            gameRepository.truncate();
+        } catch(Exception e) {
+            log.warn("Could not truncate existing table, probably has not been created yet...", e);
+        }
         gameRepository.saveAll(games);
     }
 
