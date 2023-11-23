@@ -57,10 +57,16 @@ public class GameController {
             return gameRepository.findAll();
         }
         return List.of();
+    }
 
-        /*
-        try (SolrClient solr = new Http2SolrClient.Builder("http://localhost:8983/solr/games").build()){
-            final var solrQuery = new SolrQuery();
+    /*
+    private Collection<Game> getGames(String search) {
+        if (search == null) {
+            log.info("Get all games");
+            return gameRepository.findAll();
+        }
+        try (var solr = new org.apache.solr.client.solrj.impl.Http2SolrClient.Builder("http://localhost:8983/solr/games").build()){
+            final var solrQuery = new org.apache.solr.client.solrj.SolrQuery();
             solrQuery.set("q", search);
             solrQuery.set("fl", "id");
             solrQuery.setRows(1000);
@@ -68,13 +74,13 @@ public class GameController {
             final var ids = response.getResults().stream()
                     .map(s -> (String) s.getFieldValue("id"))
                     .map(Integer::parseInt)
-                    .collect(Collectors.toList());
+                    .toList();
             log.info("Get " + ids.size() + " games");
             return gameRepository.findAllById(ids);
-        } catch (IOException | SolrServerException e) {
+        } catch (Exception e) {
             log.error("Could not search: " + search, e);
             return List.of();
         }
-         */
     }
+     */
 }

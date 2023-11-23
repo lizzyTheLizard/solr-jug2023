@@ -36,33 +36,34 @@ public class InitializerController {
     }
 
     public void initIndex(Collection<Game> games) {
-        /*
-        try (SolrClient solr = new Http2SolrClient.Builder("http://localhost:8983/solr/games").build()){
+    }
+
+    /*
+    public void initIndex(Collection<Game> games) {
+        try (var solr = new org.apache.solr.client.solrj.impl.Http2SolrClient.Builder("http://localhost:8983/solr/games").build()){
             solr.deleteByQuery("*.*");
             games.forEach(game -> {
                 try {
-                    SolrInputDocument document = convertToSolr(game);
+                    var document = convertToSolr(game);
                     solr.add(document);
-                } catch (SolrServerException | IOException e) {
+                } catch (Exception e) {
                     log.warn("Could not index " + game, e);
                 }
             });
             solr.commit();
-        } catch (IOException | SolrServerException e) {
+        } catch (Exception e) {
             log.warn("Could not re-index ",e);
         }
-         */
     }
 
 
-    /*
-    private SolrInputDocument convertToSolr(Game game) {
-        SolrInputDocument document = new SolrInputDocument();
+    private org.apache.solr.common.SolrInputDocument convertToSolr(Game game) {
+        var document = new org.apache.solr.common.SolrInputDocument();
         document.addField("id", game.getId());
         document.addField("title", game.getTitle());
         if (game.getReleaseDate() != null) {
             final var dateStr = game.getReleaseDate()
-                    .format(DateTimeFormatter.ISO_DATE)
+                    .format(java.time.format.DateTimeFormatter.ISO_DATE)
                     + "T00:00:00Z";
             document.addField("releaseDate", dateStr);
         }
@@ -81,5 +82,5 @@ public class InitializerController {
         document.addField("numberOfReviews", game.getNumberOfReviews());
         return document;
     }
-     */
+    */
 }
