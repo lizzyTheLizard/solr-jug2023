@@ -6,7 +6,7 @@
     <!-- Defining the needed fields-->
     <field name="id"              type="string"        indexed="true"  stored="true"  required="true"  multiValued="false" />
     <field name="_version_"       type="plong"         indexed="false" stored="false" required="false" multiValued="false"/>
-    <field name="title"           type="text_sort"     indexed="true"  stored="true"  required="true"  multiValued="false" />
+    <field name="title"           type="text_en"       indexed="true"  stored="true"  required="true"  multiValued="false" />
     <field name="team"            type="text_en"       indexed="true"  stored="true"  required="false" multiValued="true"  />
     <field name="genre"           type="text_en"       indexed="true"  stored="true"  required="false" multiValued="true"  />
     <field name="summary"         type="text_en"       indexed="true"  stored="false" required="true"  multiValued="false" />
@@ -21,12 +21,12 @@
     <field name="numberOfReviews" type="pdouble"       indexed="true"  stored="false" required="true"  multiValued="false" />
 
     <!-- Copy relevant field to _text_: This is the default search field-->
-    <field name="_text_" type="text_general" indexed="true" stored="false" multiValued="true"/>
+    <field name="_text_" type="text_en" indexed="true" stored="false" multiValued="true"/>
     <copyField source="title" dest="_text_"/>
     <copyField source="genre" dest="_text_"/>
     <copyField source="team" dest="_text_"/>
 
-    <!-- Definition of field types, taken from default configuration at https://github.com/apache/solr/blob/main/solr/server/solr/configsets/_default/conf/managed-schema.xml -->
+    <!-- Copied fieldTypes from https://github.com/apache/solr/blob/main/solr/server/solr/configsets/_default/conf/managed-schema.xml -->
     <fieldType name="string" class="solr.StrField" sortMissingLast="true" docValues="true" />
     <fieldType name="plong" class="solr.LongPointField" docValues="true"/>
     <fieldType name="pdouble" class="solr.DoublePointField" docValues="true"/>
@@ -34,7 +34,7 @@
     <fieldType name="text_en" class="solr.TextField" positionIncrementGap="100">
         <analyzer type="index">
             <tokenizer name="standard"/>
-            <filter name="stop" ignoreCase="true" words="stopwords.txt" />
+            <filter name="stop" ignoreCase="true" words="lang/stopwords_en.txt"/>
             <filter name="lowercase"/>
             <filter name="englishPossessive"/>
             <filter name="keywordMarker" protected="protwords.txt"/>
@@ -43,27 +43,11 @@
         <analyzer type="query">
             <tokenizer name="standard"/>
             <filter name="synonymGraph" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
-            <filter name="stop"
-                    ignoreCase="true"
-                    words="lang/stopwords_en.txt"
-            />
+            <filter name="stop" ignoreCase="true" words="lang/stopwords_en.txt"/>
             <filter name="lowercase"/>
             <filter name="englishPossessive"/>
             <filter name="keywordMarker" protected="protwords.txt"/>
             <filter name="porterStem"/>
-        </analyzer>
-    </fieldType>
-   <fieldType name="text_sort" class="solr.SortableTextField" positionIncrementGap="100">
-        <analyzer type="index">
-            <tokenizer name="standard"/>
-            <filter name="stop" ignoreCase="true" words="stopwords.txt" />
-            <filter name="lowercase"/>
-        </analyzer>
-        <analyzer type="query">
-            <tokenizer name="standard"/>
-            <filter name="stop" ignoreCase="true" words="stopwords.txt" />
-            <filter name="synonymGraph" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
-            <filter name="lowercase"/>
         </analyzer>
     </fieldType>
 </schema>

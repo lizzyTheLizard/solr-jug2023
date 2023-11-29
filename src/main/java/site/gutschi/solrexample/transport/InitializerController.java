@@ -46,20 +46,15 @@ public class InitializerController {
     public void initIndex(Collection<Game> games) {
         try (var solr = new org.apache.solr.client.solrj.impl.Http2SolrClient.Builder("http://localhost:8983/solr/games").build()){
             solr.deleteByQuery("*.*");
-            games.forEach(game -> {
-                try {
-                    var document = convertToSolr(game);
-                    solr.add(document);
-                } catch (Exception e) {
-                    log.warn("Could not index " + game, e);
-                }
-            });
+            for(var game : games) {
+                var document = convertToSolr(game);
+                solr.add(document);
+            }
             solr.commit();
         } catch (Exception e) {
             log.warn("Could not re-index ",e);
         }
     }
-
 
     private org.apache.solr.common.SolrInputDocument convertToSolr(Game game) {
         var document = new org.apache.solr.common.SolrInputDocument();

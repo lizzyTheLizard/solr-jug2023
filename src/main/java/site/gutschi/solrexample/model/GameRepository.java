@@ -13,6 +13,4 @@ public interface GameRepository extends CrudRepository<Game, Integer> {
     void truncate();
 
     @NonNull Collection<Game> findAll();
-
-    @NonNull Collection<Game> findAllById(@NonNull Iterable<Integer> integers);
 }

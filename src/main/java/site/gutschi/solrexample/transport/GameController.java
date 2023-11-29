@@ -15,6 +15,7 @@ import site.gutschi.solrexample.model.GameRepository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -71,12 +72,15 @@ public class GameController {
             solrQuery.set("fl", "id");
             solrQuery.setRows(1000);
             final var response = solr.query(solrQuery);
-            final var ids = response.getResults().stream()
+            final var result = response.getResults().stream()
                     .map(s -> (String) s.getFieldValue("id"))
                     .map(Integer::parseInt)
+                    //An iteration over findById is not the most performant choice, but for here it's enough
+                    .map(gameRepository::findById)
+                    .flatMap(Optional::stream)
                     .toList();
-            log.info("Get " + ids.size() + " games");
-            return gameRepository.findAllById(ids);
+            log.info("Get " + result.size() + " games");
+            return result;
         } catch (Exception e) {
             log.error("Could not search: " + search, e);
             return List.of();
