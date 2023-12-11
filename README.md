@@ -21,14 +21,6 @@ Beim ersten Starten muss die Datenbank mit den Daten aus [games.csv](src/main/re
 
 # Links
 
-* https://github.com/lizzyTheLizard/solr-example
-Erweitertes Example mit eigenem Schema etc.
-
-* https://solr.apache.org/guide/solr/latest/getting-started/solr-tutorial.html
-Offizielle Solr Dokumentation; Tutorials, Guides für Deployment und Konfiguration, Dokumentation der Query-Parser und vieles mehr
-
-* https://hub.docker.com/_/solr
-Offizielles Docker-Image von Solr
-
-* https://www.baeldung.com/apache-solrj
-baeldung.com/apache-solrj
+* [Offizielle Solr Dokumentation](https://solr.apache.org/guide/solr/latest/getting-started/solr-tutorial.html): Tutorials, Guides für Deployment und Konfiguration, Dokumentation der Query-Parser und vieles mehr
+* [Offizielles Docker-Image von Solr](https://hub.docker.com/_/solr)
+* [Tutorial SolrJ](https://www.baeldung.com/apache-solrj)
